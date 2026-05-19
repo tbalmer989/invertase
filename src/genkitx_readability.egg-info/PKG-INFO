@@ -1,0 +1,48 @@
+Metadata-Version: 2.4
+Name: genkitx-readability
+Version: 0.1.0
+Summary: Genkit plugin to extract clean, structured main content from web URLs for LLM consumption
+Author: Generated
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.28
+Requires-Dist: beautifulsoup4>=4.12
+Requires-Dist: html5lib>=1.1
+Requires-Dist: trafilatura>=1.6
+Provides-Extra: test
+Requires-Dist: pytest>=8.0; extra == "test"
+
+# genkitx-readability
+
+Lightweight Genkit plugin to extract clean, structured main content from web URLs for use with LLMs.
+
+## Installation
+
+```bash
+python3 -m pip install -e .
+```
+
+## Usage
+
+```python
+from genkitx_readability import extract_url_content
+
+result = extract_url_content("https://example.com/article")
+print(result["title"])
+print(result["excerpt"])
+```
+
+## Testing
+
+```bash
+python3 -m pip install -e .[test]
+python3 -m pytest -q
+```
+
+## Maintenance
+
+- Plugin entry point: `genkitx_readability.plugin:register`
+- Core extraction: `src/genkitx_readability/utils.py`
+- Structured output: `src/genkitx_readability/schema.py`
+- Agent skill guide: `skills/genkitx-readability-skill.md`

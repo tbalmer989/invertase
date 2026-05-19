@@ -1,0 +1,2 @@
+[genkit.plugins]
+genkitx-readability = genkitx_readability.plugin:register

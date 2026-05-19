@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/genkitx_readability/__init__.py
+src/genkitx_readability/plugin.py
+src/genkitx_readability/schema.py
+src/genkitx_readability/utils.py
+src/genkitx_readability.egg-info/PKG-INFO
+src/genkitx_readability.egg-info/SOURCES.txt
+src/genkitx_readability.egg-info/dependency_links.txt
+src/genkitx_readability.egg-info/entry_points.txt
+src/genkitx_readability.egg-info/requires.txt
+src/genkitx_readability.egg-info/top_level.txt
+tests/test_extract.py
