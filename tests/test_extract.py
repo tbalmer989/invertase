@@ -2,6 +2,7 @@ import pytest
 from types import SimpleNamespace
 
 from genkitx_readability import extract_url_content
+from genkitx_readability.utils import _filter_text_sections, extract_main_content
 
 
 SAMPLE_HTML = """
@@ -51,3 +52,29 @@ def test_extract_from_html_monkeypatch(monkeypatch):
     assert "first paragraph" in out["text"]
     assert out["top_image"] == "https://example.test/images/og-hero.jpg"
     assert out["images"] == ["https://example.test/images/hero.jpg"]
+
+
+def test_selects_largest_article_tag(monkeypatch):
+    html = """
+    <html>
+      <body>
+        <article><p>Short article.</p></article>
+        <article><p>Longer article body text with more article content.</p></article>
+      </body>
+    </html>
+    """
+    import genkitx_readability.utils as utils
+    monkeypatch.setattr(utils, "trafilatura", None, raising=False)
+
+    result = extract_main_content(html)
+    assert "Longer article body text" in result["text"]
+    assert "Short article." not in result["text"]
+
+
+def test_filters_advertisements_from_text():
+    sample = "Headline\nStory text.\nAdvertisement\nHide Ad\nStory continues."
+    filtered = _filter_text_sections(sample, remove_related=True, remove_invite=True)
+    assert "Advertisement" not in filtered
+    assert "Hide Ad" not in filtered
+    assert "Story text." in filtered
+    assert "Story continues." in filtered

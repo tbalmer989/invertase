@@ -1,0 +1,263 @@
+url: https://www.theregister.com/databases/2026/05/20/postgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm/5242822
+title: PostgreSQL backup tool gets some backup of its own after sole maintainer sounds alarm
+author: Lindsay Clark
+publish_date: 2026-05-20T09:15:00.000Z
+language: en-US
+text: Databases
+PostgreSQL backup tool gets some backup of its own after sole maintainer sounds alarm
+AWS, Percona, Supabase, pgEdge, and Tiger Data rally round pgBackRest with funding pledge
+Lindsay Clark
+Lindsay
+Clark
+Published
+wed 20 May 2026 // 10:15 UTC
+A group of companies including AWS and
+Percona have stepped up to fund the maintenance of pgBackRest, an extension to the widely used open source database PostgreSQL, after its future was left hanging in the balance.
+The tool provides a backup and restore
+solution for the PostgreSQL RDBMS, which has become more or less ubiquitous in
+services offered by cloud providers including AWS, Google, and Microsoft Azure.
+It had been maintained for the last 13 years by David Steele, a principal architect at Crunchy Data – which
+provides PostgreSQL managed cloud services, Kubernetes deployments, and
+on-prem solutions – until June last year. At that time,
+cloud data analytics
+company Snowflake bought Crunchy Data
+to help provide a transactional
+database.
+A Snowflake spokesperson said: "Open source software is built on broad community participation, and we are pleased to see continued support for pgBackRest from organizations across the ecosystem. Snowflake supports a variety of open source projects, including within the Postgres ecosystem, and we look forward to continued community collaboration."
+REG AD
+Last month, Steele announced he was no
+longer able to maintain the project. "Since Crunchy Data was sold, I have been
+maintaining pgBackRest and looking for a position that would allow me to
+continue the work, but so far I have not been successful. Likewise, my efforts
+to secure sponsorship have also fallen far short of what I need to make the
+project viable," he said.
+REG AD
+Steele said he was hoping to continue the
+project, but lack of support was forcing him to consider new roles that would not leave him enough time.
+A group of interested companies have now banded
+together to fund ongoing development. "Their support means the project is no
+longer reliant on a single sponsor, giving pgBackRest the stability it needs
+for the long term," Steele said.
+MORE CONTEXT
+60 years since humanity touched the surface of another planet
+Oracle and OpenAI's Texas Stargate datacenter expansion reportedly on the skids
+Don’t blame AI yet for poor jobs numbers, analysts say
+US state laws push age checks into the operating system
+As well as AWS and Percona, sponsors
+include Supabase, which provides a back-end platform built on PostgreSQL, and pgEdge,
+which offers open source distributed PostgreSQL.
+Open source consultancy and technology
+company Percona said thousands of organizations depend on the pgBackRest
+extension for backup and recovery of PostgreSQL, including customers
+running Percona's Expert Support for PostgreSQL.
+"pgBackRest has been our recommended
+backup solution/tool for years. When its future came into question,
+coordinating with other companies to keep it healthy was a straightforward
+decision – for our customers and for the community," said Percona CEO Peter Farkas.
+The group of companies, which also includes
+Tiger Data, creators of TimescaleDB, have committed to supporting bug
+fixes, feature work, and community reviews. Percona said it plans to bring a new maintainer on board who can help provide continuity in the long term. The project is also looking to recruit more sponsors and reduce reliance on a single maintainer. ®
+aws
+percona
+postgresql
+databases
+pgbackrest
+open source software
+html: <article class="">
+
+                    <section class="main article k5a-article" id="main">
+
+                            <div></div>
+
+
+
+                        <div class="articleHeader column" data-element-guid="d11159dd-82a3-4c53-901c-d41dec75505c">
+
+    
+
+
+    <p class="kicker" style="">Databases</p>
+
+
+    <div class="media">
+        <div class="floatingText"></div>
+    </div>
+
+
+
+
+
+    <h1 class="headline mainTitle t44" style="">PostgreSQL backup tool gets some backup of its own after sole maintainer sounds alarm</h1>
+    <p class="subtitle" style="">AWS, Percona, Supabase, pgEdge, and Tiger Data rally round pgBackRest with funding pledge</p>
+
+
+
+        <div class="meta" data-element-guid="07410499-2665-44c7-ab99-ccf53f1dde69">
+    
+
+    <div class="bylines">
+        <div class="byline column" data-element-guid="c1819c7e-19d3-4351-b21b-3953de04fe5f" itemscope="" itemtype="http://schema.org/Person">
+    
+    <div class="content">
+            
+        <address class="name lab-name-flex">
+        <span class="lab-hidden-byline-name" itemprop="name">Lindsay Clark</span>
+                <a href="https://www.theregister.com/author/lindsay-clark" itemprop="url" rel="author">
+                <span class="firstname">Lindsay</span>
+                <span class="lastname">Clark</span>
+                </a>
+        </address>
+    </div>
+</div>
+
+        
+    </div>
+
+
+    
+    <div class="dates">
+        <span class="dateGroup datePublished">
+            <span class="dateLabel">Published</span>
+            <time datetime="2026-05-20T09:15:00.000Z">wed 20 May 2026 // 10:15 UTC</time>
+        </span>
+    </div>
+
+
+    <div class="social">
+            <a aria-label="Share on Facebook" class="fi-social-facebook" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+            <a aria-label="Share on X (Twitter)" class="fi-social-twitter" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+            <a aria-label="Share on LinkedIn" class="fi-social-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+            <a aria-label="Share on Bluesky" class="fi-social-bluesky" href="https://bsky.app/intent/compose?text=PostgreSQL%20backup%20tool%20gets%20some%20backup%20of%20its%20own%26nbsp%3Bafter%20sole%20maintainer%20sounds%20alarm%0Ahttps%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+            <a aria-label="Share on Reddit" class="fi-social-reddit" href="https://www.reddit.com/submit?url=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822&amp;title=PostgreSQL%20backup%20tool%20gets%20some%20backup%20of%20its%20own%26nbsp%3Bafter%20sole%20maintainer%20sounds%20alarm" target="_blank"></a>
+            <a aria-label="Share on WhatsApp" class="fi-social-whatsapp" href="https://api.whatsapp.com/send?text=PostgreSQL%20backup%20tool%20gets%20some%20backup%20of%20its%20own%26nbsp%3Bafter%20sole%20maintainer%20sounds%20alarm%0Ahttps%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+    </div>
+
+
+
+</div>
+
+</div>
+
+
+                        
+
+                        
+                        
+
+
+                        
+
+                        <div class="bodytext large-12 small-12 medium-12" data-element-guid="4c9dc5d9-c886-4348-bf4a-01d0dc71377d">
+    
+    
+
+    <p>A group of companies including AWS and
+Percona have stepped up to fund the maintenance of pgBackRest, an extension to the widely used open source database PostgreSQL, after its future was left hanging in the balance.</p><p>The tool provides a backup and restore
+solution for the PostgreSQL RDBMS, which has become more or less ubiquitous in
+services offered by cloud providers including AWS, Google, and Microsoft Azure. </p><p>It had been maintained for the last 13 years by David Steele, a principal architect at Crunchy Data – which
+provides PostgreSQL managed cloud services, Kubernetes deployments, and
+on-prem solutions – until June last year. At that time, <a href=" https://www.theregister.com/software/2026/02/03/snowflake-plugs-postgresql-into-its-ai-data-cloud/4467099">cloud data analytics
+company Snowflake bought Crunchy Data</a> to help provide a transactional
+database.<br/><br/>A Snowflake spokesperson said: "Open source software is built on broad community participation, and we are pleased to see continued support for pgBackRest from organizations across the ecosystem. Snowflake supports a variety of open source projects, including within the Postgres ecosystem, and we look forward to continued community collaboration."<br/></p><div class="column google-ad widthFull" data-element-guid="9bf2a7ad-d44d-41ba-dcd0-9b0f11776c40" style="">
+
+        <span class="ad-label">REG AD</span>
+        <div class="adunit" id="labrador/thereg/article/desktop/b"></div>
+        
+</div>
+<p>Last month, Steele announced he was no
+longer able to maintain the project. "Since Crunchy Data was sold, I have been
+maintaining pgBackRest and looking for a position that would allow me to
+continue the work, but so far I have not been successful. Likewise, my efforts
+to secure sponsorship have also fallen far short of what I need to make the
+project viable," he said.</p><div class="column google-ad floatRight widthAuto" data-element-guid="42e6fa68-4799-489e-9e9d-a9e6be9bc55a" style="">
+
+        <span class="ad-label">REG AD</span>
+        <div class="adunit" id="labrador/thereg/article/desktop/c"></div>
+        
+</div>
+<p>Steele said he was hoping to continue the
+project, but lack of support was forcing him to consider new roles that would not leave him enough time. </p><p>A group of interested companies have now banded
+together to fund ongoing development. "Their support means the project is no
+longer reliant on a single sponsor, giving pgBackRest the stability it needs
+for the long term," Steele said. </p><div class="lab4 column articleList layout_vertical imageLayout_left small-12 large-12 small-abs-12 large-abs-12 abs_grid_12 grid-vas-start mobile-grid-vas-start" data-element-guid="afe083ca-6701-48e9-9bd8-f8827dd7fb42" style="--articleList-columnsDesktop: repeat(1, 1fr); --articleList-columnsMobile: repeat(1, 1fr); ">
+    
+    <div class="content border_width_0 border_width_mobile_0 border-radius-48 border-radius-mobile_48">
+        <h2 class="article-list-title t19 font-RobotoCondensed" style="">MORE CONTEXT</h2>
+        <ul><li class="">
+    <a data-k5a-url="https://www.theregister.com/a/4907779" href="/offbeat/2026/03/07/60-years-since-humans-touched-the-surface-of-another-planet/4907779" itemprop="url">
+        
+            <h3 class="al-title" itemprop="name headline">60 years since humanity touched the surface of another planet</h3>
+    </a>
+</li>
+<li class="">
+    <a data-k5a-url="https://www.theregister.com/a/4159805" href="/on-prem/2026/03/07/openai-and-oracle-reportedly-abandon-tx-stargate-expansion/4159805" itemprop="url">
+        
+            <h3 class="al-title" itemprop="name headline">Oracle and OpenAI's Texas Stargate datacenter expansion reportedly on the skids</h3>
+    </a>
+</li>
+<li class="">
+    <a data-k5a-url="https://www.theregister.com/a/4119428" href="/software/2026/03/06/dont-blame-ai-yet-for-poor-jobs-numbers-analysts-say/4119428" itemprop="url">
+        
+            <h3 class="al-title" itemprop="name headline">Don’t blame AI yet for poor jobs numbers, analysts say</h3>
+    </a>
+</li>
+<li class="">
+    <a data-k5a-url="https://www.theregister.com/a/4750249" href="/software/2026/03/06/us-state-laws-push-age-checks-into-the-operating-system/4750249" itemprop="url">
+        
+            <h3 class="al-title" itemprop="name headline">US state laws push age checks into the operating system</h3>
+    </a>
+</li>
+</ul>
+    </div>
+</div>
+<p>As well as AWS and Percona, sponsors
+include Supabase, which provides a back-end platform built on PostgreSQL, and pgEdge,
+which offers open source distributed PostgreSQL. </p><p>Open source consultancy and technology
+company Percona said thousands of organizations depend on the pgBackRest
+extension for backup and recovery of PostgreSQL, including customers
+running Percona's Expert Support for PostgreSQL.</p><p>"pgBackRest has been our recommended
+backup solution/tool for years. When its future came into question,
+coordinating with other companies to keep it healthy was a straightforward
+decision – for our customers and for the community," said Percona CEO Peter Farkas.</p><p>The group of companies, which also includes
+Tiger Data, creators of TimescaleDB, have committed to supporting bug
+fixes, feature work, and community reviews. Percona said it plans to bring a new maintainer on board who can help provide continuity in the long term. The project is also looking to recruit more sponsors and reduce reliance on a single maintainer. ® <br/><br/></p>
+
+    
+
+    
+</div>
+
+
+                        
+
+
+                        <div class="column articleFooter" data-element-guid="7475c074-83b3-4e50-ab01-91bf62dcdfe6">
+    <span class="tags">
+            <a data-tag="aws" href="/tag/aws">aws</a>
+            <a data-tag="percona" href="/tag/percona">percona</a>
+            <a data-tag="postgresql" href="/tag/postgresql">postgresql</a>
+            <a data-tag="databases" href="/tag/databases">databases</a>
+            <a data-tag="pgbackrest" href="/tag/pgbackrest">pgbackrest</a>
+            <a data-tag="open source software" href="/tag/open%20source%20software">open source software</a>
+    </span>
+    
+</div>
+
+
+                        <div class="row social">
+                            <div class="column large-12 small-12">
+                                    <a aria-label="Share on Facebook" class="fi-social-facebook" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+                                    <a aria-label="Share on X (Twitter)" class="fi-social-twitter" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+                                    <a aria-label="Share on LinkedIn" class="fi-social-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+                                    <a aria-label="Share on Bluesky" class="fi-social-bluesky" href="https://bsky.app/intent/compose?text=PostgreSQL%20backup%20tool%20gets%20some%20backup%20of%20its%20own%26nbsp%3Bafter%20sole%20maintainer%20sounds%20alarm%0Ahttps%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+                                    <a aria-label="Share on Reddit" class="fi-social-reddit" href="https://www.reddit.com/submit?url=https%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822&amp;title=PostgreSQL%20backup%20tool%20gets%20some%20backup%20of%20its%20own%26nbsp%3Bafter%20sole%20maintainer%20sounds%20alarm" target="_blank"></a>
+                                    <a aria-label="Share on WhatsApp" class="fi-social-whatsapp" href="https://api.whatsapp.com/send?text=PostgreSQL%20backup%20tool%20gets%20some%20backup%20of%20its%20own%26nbsp%3Bafter%20sole%20maintainer%20sounds%20alarm%0Ahttps%3A%2F%2Fwww.theregister.com%2Fdatabases%2F2026%2F05%2F20%2Fpostgresql-backup-tool-gets-some-backup-of-its-own-after-sole-maintainer-sounds-alarm%2F5242822" target="_blank"></a>
+                            </div>
+                        </div>
+
+                    </section>
+                    
+                </article>
+excerpt: AWS, Percona, Supabase, pgEdge, and Tiger Data rally round pgBackRest with funding pledge
+top_image: https://image.theregister.com/5242864.jpg?imageId=5242864&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683
+images: 

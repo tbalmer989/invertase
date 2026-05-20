@@ -31,7 +31,7 @@ def resolve_url(base: Optional[str], link: str) -> str:
 
 
 def _clean_soup(soup: BeautifulSoup):
-    for tag in soup(["script", "style", "noscript", "iframe", "header", "footer", "nav", "form"]):
+    for tag in soup(["script", "style", "noscript", "iframe", "header", "footer", "nav", "form", "aside"]):
         tag.decompose()
 
 
@@ -45,16 +45,50 @@ def _remove_unwanted_sections(soup: BeautifulSoup, *, remove_related: bool = Fal
     if not (remove_related or remove_invite):
         return
 
-    # Remove elements by class or id that explicitly mention 'related' or similar
-    related_keys = ("related", "related-content", "related-topics", "related-articles", "see-also", "more-on", "relatedstories")
+    # Remove elements by class or id that explicitly mention related, ad, promo, or sidebar content.
+    unwanted_keys = (
+        "related",
+        "related-content",
+        "related-topics",
+        "related-articles",
+        "see-also",
+        "more-on",
+        "relatedstories",
+        "recommend",
+        "recommendation",
+        "advert",
+        "ads",
+        "banner",
+        "promo",
+        "newsletter",
+        "subscribe",
+        "subscription",
+        "sponsored",
+        "sidebar",
+        "cookie",
+        "modal",
+        "paywall",
+        "overlay",
+    )
+
+    def is_unwanted_attr(value: str) -> bool:
+        lowercase = value.lower()
+        return any(key in lowercase for key in unwanted_keys)
+
     for tag in list(soup.find_all(attrs={"class": True})):
         classes = " ".join(tag.get("class") or [])
-        cls = classes.lower()
-        if any(k in cls for k in related_keys):
+        if is_unwanted_attr(classes):
             tag.decompose()
     for tag in list(soup.find_all(attrs={"id": True})):
         idval = (tag.get("id") or "").lower()
-        if any(k in idval for k in related_keys):
+        if is_unwanted_attr(idval):
+            tag.decompose()
+    for tag in list(soup.find_all(attrs={"aria-label": True})):
+        if is_unwanted_attr(tag.get("aria-label", "")):
+            tag.decompose()
+    for tag in list(soup.find_all(attrs={"role": True})):
+        role = (tag.get("role") or "").lower()
+        if role in ("complementary", "banner", "navigation", "search", "contentinfo", "dialog"):
             tag.decompose()
 
     # Remove headings that indicate related content and their nearby containers
@@ -189,23 +223,44 @@ def _extract_metadata(soup: BeautifulSoup) -> dict:
     }
 
 
-def _select_main_content(soup: BeautifulSoup) -> Optional[BeautifulSoup]:
-    for name in ("article", "main"):  # prefer semantic containers
-        element = soup.find(name)
-        if element:
-            return element
+def _score_candidate_block(block: BeautifulSoup) -> int:
+    text = block.get_text(" ", strip=True) or ""
+    if len(text) < 50:
+        return 0
 
-    blocks = soup.find_all(["article", "main", "section", "div"])
+    score = len(text)
+    if block.find(re.compile(r"^h[1-6]$")):
+        score += 2000
+    score += len(block.find_all("p")) * 400
+
+    prefix = text[:200]
+    if re.search(r"\b(function\s*\(|document\.querySelector|googletag|window\.location|var\s+\w+|const\s+\w+|let\s+\w+)\b", prefix):
+        score -= 10000
+
+    return score
+
+
+def _select_main_content(soup: BeautifulSoup) -> Optional[BeautifulSoup]:
+    # Prefer the highest-scoring semantic block, favoring real article text over code
+    # or navigation containers.
+    article_elements = soup.find_all("article")
+    if article_elements:
+        return max(article_elements, key=_score_candidate_block)
+
+    main_elements = soup.find_all("main")
+    if main_elements:
+        return max(main_elements, key=_score_candidate_block)
+
+    blocks = soup.find_all(["section", "div"])
     if not blocks:
         return soup
-    return max(blocks, key=lambda block: len(block.get_text(" ", strip=True)))
+    return max(blocks, key=_score_candidate_block)
 
 
 def _filter_text_sections(text: str, *, remove_related: bool = False, remove_invite: bool = False) -> str:
-    if not (remove_related or remove_invite):
-        return text
-
-    # Build simple header / phrase patterns similar to the DOM heuristics
+    # Always remove low-value page chrome such as advertisement blocks.
+    ad_header_re = re.compile(r"^(advertisement|hide ad|sponsored|sponsored content|read more|sign up|newsletter|subscribe|subscription|follow us)$", re.I)
+    ad_phrase_re = re.compile(r"(advertisement|hide ad|sponsored|subscribe|newsletter|sign up|read more)", re.I)
     related_header_re = re.compile(r"^(related|related content|related topics|you may also like|you might also like|more on this|related articles|related stories|see also)$", re.I)
     invite_phrases = [
         # English
@@ -249,7 +304,9 @@ def _filter_text_sections(text: str, *, remove_related: bool = False, remove_inv
     skip = False
     for line in lines:
         stripped = line.strip()
-        # Header-like lines
+        if ad_header_re.match(stripped) or (len(stripped.split()) <= 5 and ad_phrase_re.search(stripped)):
+            skip = True
+            continue
         if remove_related and related_header_re.match(stripped):
             skip = True
             continue
@@ -257,24 +314,37 @@ def _filter_text_sections(text: str, *, remove_related: bool = False, remove_inv
             skip = True
             continue
         if skip:
-            # end skipping on blank line
             if stripped == "":
                 skip = False
-            else:
                 continue
+            if ad_header_re.match(stripped) or (len(stripped.split()) <= 5 and ad_phrase_re.search(stripped)):
+                continue
+            skip = False
         out_lines.append(line)
     return "\n".join(out_lines).strip()
 
 
 def extract_main_content(html: str, url: Optional[str] = None, *, remove_related: bool = False, remove_invite: bool = False) -> dict:
     """Extract main content and metadata from HTML."""
+    soup = BeautifulSoup(html, "html5lib")
+    has_semantic = bool(soup.find(["article", "main"]))
+
     if trafilatura:
         try:
             downloaded = trafilatura.extract(html, include_comments=False, include_tables=False, url=url)
             if downloaded:
-                soup = BeautifulSoup(html, "html5lib")
                 metadata = _extract_metadata(soup)
                 text = downloaded.strip()
+                content = _select_main_content(soup)
+                fallback_text = content.get_text("\n", strip=True) if content else None
+                # If semantic HTML is present and the trafilatura output looks like
+                # page chrome rather than the article body, use the DOM-based fallback.
+                bad_output_re = re.compile(r"(advertisement|hide ad|document\.querySelector|googletag|Search if)", re.I)
+                if has_semantic and (
+                    bad_output_re.search(text)
+                    or (fallback_text and len(fallback_text) > 200 and len(text) > len(fallback_text) * 1.8)
+                ):
+                    raise ValueError("trafilatura output appears to contain page chrome")
                 # Apply simple text filters when requested (trafilatura output is plain text)
                 text = _filter_text_sections(text, remove_related=remove_related, remove_invite=remove_invite)
                 if metadata.get("description"):
@@ -283,7 +353,6 @@ def extract_main_content(html: str, url: Optional[str] = None, *, remove_related
                     excerpt = text[:512] + "..."
                 else:
                     excerpt = text
-                content = _select_main_content(soup)
                 images: List[str] = []
                 if content:
                     for img in content.find_all("img"):
@@ -309,7 +378,6 @@ def extract_main_content(html: str, url: Optional[str] = None, *, remove_related
         except Exception:
             logger.debug("trafilatura extraction failed, falling back", exc_info=True)
 
-    soup = BeautifulSoup(html, "html5lib")
     _clean_soup(soup)
     # Apply DOM-level removals before metadata/content selection
     _remove_unwanted_sections(soup, remove_related=remove_related, remove_invite=remove_invite)
