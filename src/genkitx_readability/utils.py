@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from typing import Optional, List
 from urllib.parse import urljoin
 
@@ -32,6 +33,94 @@ def resolve_url(base: Optional[str], link: str) -> str:
 def _clean_soup(soup: BeautifulSoup):
     for tag in soup(["script", "style", "noscript", "iframe", "header", "footer", "nav", "form"]):
         tag.decompose()
+
+
+def _remove_unwanted_sections(soup: BeautifulSoup, *, remove_related: bool = False, remove_invite: bool = False):
+    """Heuristic removal of sections such as related-content blocks or
+    invitations to comment/get in touch.
+
+    This uses class/id matching and heading text heuristics to remove nodes
+    that are unlikely to be part of the main article.
+    """
+    if not (remove_related or remove_invite):
+        return
+
+    # Remove elements by class or id that explicitly mention 'related' or similar
+    related_keys = ("related", "related-content", "related-topics", "related-articles", "see-also", "more-on", "relatedstories")
+    for tag in list(soup.find_all(attrs={"class": True})):
+        classes = " ".join(tag.get("class") or [])
+        cls = classes.lower()
+        if any(k in cls for k in related_keys):
+            tag.decompose()
+    for tag in list(soup.find_all(attrs={"id": True})):
+        idval = (tag.get("id") or "").lower()
+        if any(k in idval for k in related_keys):
+            tag.decompose()
+
+    # Remove headings that indicate related content and their nearby containers
+    related_heading_re = re.compile(r"^(related|related content|related topics|you may also like|you might also like|more on this|related articles|related stories|see also)$", re.I)
+    for h in list(soup.find_all(re.compile(r"^h[1-6]$"))):
+        text = (h.get_text(" ", strip=True) or "").strip()
+        if related_heading_re.match(text):
+            parent = h.find_parent()
+            if parent and parent.name not in ("article", "main"):
+                parent.decompose()
+            else:
+                # remove header and its following siblings until next header
+                next_sib = h.next_sibling
+                h.decompose()
+                while next_sib is not None:
+                    if getattr(next_sib, "name", "") and re.match(r"^h[1-6]$", getattr(next_sib, "name", "")):
+                        break
+                    nxt = next_sib.next_sibling
+                    try:
+                        next_sib.decompose()
+                    except Exception:
+                        pass
+                    next_sib = nxt
+
+    # Invitations / comments heuristics: search for phrases indicating engagement
+    if remove_invite:
+        invite_phrases = [
+            # English
+            "get in touch",
+            "contact us",
+            "share your views",
+            "leave a comment",
+            "leave a reply",
+            "join the conversation",
+            "tell us",
+            "have your say",
+            "add your comment",
+            "comment",
+            "comments",
+            "feedback",
+            # Spanish
+            "déjanos un comentario",
+            "deja tu comentario",
+            "comenta abajo",
+            "comenta",
+            "escribe un comentario",
+            # French
+            "laissez un commentaire",
+            "laisser un commentaire",
+            "partagez votre avis",
+            "donnez votre avis",
+            # German
+            "hinterlassen Sie einen Kommentar",
+            "hinterlasse einen kommentar",
+            "teilen Sie Ihre Meinung",
+            "teilen sie ihre meinung",
+            # Portuguese
+            "deixe um comentário",
+            "comente abaixo",
+            "compartilhe sua opinião",
+        ]
+        invite_re = re.compile("|".join(re.escape(s) for s in invite_phrases), re.I)
+        for tag in list(soup.find_all(["p", "div", "section", "aside"])):
+            text = (tag.get_text(" ", strip=True) or "").strip()
+            if text and invite_re.search(text):
+                tag.decompose()
 
 
 def _meta_content(soup: BeautifulSoup, keys: List[str]) -> Optional[str]:
@@ -112,7 +201,72 @@ def _select_main_content(soup: BeautifulSoup) -> Optional[BeautifulSoup]:
     return max(blocks, key=lambda block: len(block.get_text(" ", strip=True)))
 
 
-def extract_main_content(html: str, url: Optional[str] = None) -> dict:
+def _filter_text_sections(text: str, *, remove_related: bool = False, remove_invite: bool = False) -> str:
+    if not (remove_related or remove_invite):
+        return text
+
+    # Build simple header / phrase patterns similar to the DOM heuristics
+    related_header_re = re.compile(r"^(related|related content|related topics|you may also like|you might also like|more on this|related articles|related stories|see also)$", re.I)
+    invite_phrases = [
+        # English
+        "get in touch",
+        "contact us",
+        "share your views",
+        "leave a comment",
+        "leave a reply",
+        "join the conversation",
+        "tell us",
+        "have your say",
+        "add your comment",
+        "comment",
+        "comments",
+        "feedback",
+        # Spanish
+        "déjanos un comentario",
+        "deja tu comentario",
+        "comenta abajo",
+        "comenta",
+        "escribe un comentario",
+        # French
+        "laissez un commentaire",
+        "laisser un commentaire",
+        "partagez votre avis",
+        "donnez votre avis",
+        # German
+        "hinterlassen Sie einen Kommentar",
+        "hinterlasse einen kommentar",
+        "teilen Sie Ihre Meinung",
+        "teilen sie ihre meinung",
+        # Portuguese
+        "deixe um comentário",
+        "comente abaixo",
+        "compartilhe sua opinião",
+    ]
+    invite_re = re.compile("|".join(re.escape(s) for s in invite_phrases), re.I)
+
+    lines = text.splitlines()
+    out_lines: list[str] = []
+    skip = False
+    for line in lines:
+        stripped = line.strip()
+        # Header-like lines
+        if remove_related and related_header_re.match(stripped):
+            skip = True
+            continue
+        if remove_invite and invite_re.search(stripped):
+            skip = True
+            continue
+        if skip:
+            # end skipping on blank line
+            if stripped == "":
+                skip = False
+            else:
+                continue
+        out_lines.append(line)
+    return "\n".join(out_lines).strip()
+
+
+def extract_main_content(html: str, url: Optional[str] = None, *, remove_related: bool = False, remove_invite: bool = False) -> dict:
     """Extract main content and metadata from HTML."""
     if trafilatura:
         try:
@@ -121,6 +275,8 @@ def extract_main_content(html: str, url: Optional[str] = None) -> dict:
                 soup = BeautifulSoup(html, "html5lib")
                 metadata = _extract_metadata(soup)
                 text = downloaded.strip()
+                # Apply simple text filters when requested (trafilatura output is plain text)
+                text = _filter_text_sections(text, remove_related=remove_related, remove_invite=remove_invite)
                 if metadata.get("description"):
                     excerpt = metadata.get("description")
                 elif len(text) > 512:
@@ -155,6 +311,8 @@ def extract_main_content(html: str, url: Optional[str] = None) -> dict:
 
     soup = BeautifulSoup(html, "html5lib")
     _clean_soup(soup)
+    # Apply DOM-level removals before metadata/content selection
+    _remove_unwanted_sections(soup, remove_related=remove_related, remove_invite=remove_invite)
     metadata = _extract_metadata(soup)
     content = _select_main_content(soup)
     text = content.get_text("\n", strip=True) if content else soup.get_text("\n", strip=True)
@@ -171,6 +329,9 @@ def extract_main_content(html: str, url: Optional[str] = None) -> dict:
         top_image = resolve_url(url, top_image)
     elif images:
         top_image = images[0]
+
+    # Apply text-level filtering for fallbacks as well
+    text = _filter_text_sections(text, remove_related=remove_related, remove_invite=remove_invite)
 
     if metadata.get("description"):
         excerpt = metadata.get("description")
