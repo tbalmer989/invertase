@@ -84,7 +84,7 @@ This was a really interesting project to work on and I feel I've learnt a bit du
 
 - Record the log at the time of doing something rather than writing it after the fact
 - User testing against Reddit and Stack Overflow showed that in its current state  extracting text social media sites would be difficult so I probably should have been a bit focused on news sites.
-- Use Ai to generate complex test data to work against to start with.
+- Use Ai to generate complex test fixtures. Potentially using a shortlist of news sites and using them to select random articles and generating from that.
 
 If I had more I would consider adding the following options:
 
