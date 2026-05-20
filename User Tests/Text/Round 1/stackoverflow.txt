@@ -1,0 +1,16 @@
+url: https://stackoverflow.com/questions/79943995/couldnt-log-in-to-aws-cli-using-aws-login
+title: Couldn't log in to AWS CLI using aws login
+language: en
+text: I'm having this problem when using aws login
+to log in to AWS CLI:
+It says refresh token has expired, but I can't think of any refresh token that is being used in the authentication process.
+I've tried to remove cookies and log in again in the web browser, then try aws login
+again, but after it says login successfully and I can close the tab, back into the terminal it shows like in the picture.
+I've also tried to remove the cache folder from ~/.aws/login/cache
+, then log in again, but it keeps failing.
+excerpt: I'm having this problem when using aws login to log in to AWS CLI:
+
+It says refresh token has expired, but I can't think of any refresh token that is being used in the authentication process.
+I've ...
+top_image: https://stackoverflow.com/Content/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=0f0cab681579
+images: https://i.sstatic.net/kE1NvpWb.png, https://i.sstatic.net/feZwC.jpg?s=64, https://www.gravatar.com/avatar/2be5324b98ac02ee7ea06d3b8c53b519?s=64&d=identicon&r=PG&f=y&so-version=2, https://stackoverflow.com/posts/79943995/ivc/43e8?prg=01b34b3b-e0b4-4a40-89a5-bd1869d8f187
