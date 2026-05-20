@@ -14,6 +14,14 @@ Extension points:
 - Add richer metadata: parse OpenGraph and JSON-LD in `utils.extract_main_content`.
 - Improve image handling: resolve relative URLs using `urllib.parse.urljoin` and optionally download thumbnails.
 
+Desired agent capabilities:
+
+- Abstract Syntax Tree (AST) & Node-Level Traversal Skills: support code-aware edits by reasoning over Python AST nodes, import graphs, and AST-safe transformations rather than raw text patches.
+- Token-Optimal Schema Synthesis: generate concise, schema-driven outputs and patch plans to minimize token cost while preserving correctness for GenKit plugin contracts.
+- Idiomatic GenKit Runtime Mapping: align feature design with GenKit runtime conventions, host discovery mechanics, and plugin entry-point semantics.
+- Headless Orchestration & Connection Resiliency: favor non-interactive orchestration, resilient HTTP fetch patterns, retry/fallback logic, and offline-safe test fixtures.
+- Automated Regression & Fixture Testing: use pytest fixtures, mocked network responses, and regression coverage for site-specific extraction edge cases.
+
 Testing & CI:
 
 - Tests live under `tests/` and should mock network calls. Use `pytest` and `requests-mock`/`responses`.
